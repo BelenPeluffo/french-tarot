@@ -43,6 +43,7 @@ const Table = () => {
   const [showPolarity, setShowPolarity] = useState(false);
   const [showValueMeaning, setShowValueMeaning] = useState(false);
   const [showDeckMeaning, setShowDeckMeaning] = useState(false);
+  const [showFinalPolarity, setShowFinalPolarity] = useState(false);
 
   const getRandomCard = () => {
     const deck =
@@ -78,41 +79,38 @@ const Table = () => {
           <div className="card-container" key={index}>
             <div>{title}</div>
             {selectedCards && selectedCards.length > 2 ? (
-              <div className={`card ${selectedCards[index].color}`}>
-                {selectedCards[index].card}
-              </div>
+              <>
+                <div className={`card ${selectedCards[index].color}`}>
+                  {selectedCards[index].card}
+                </div>
+                {showPolarity ? (
+                  <div className="data">
+                    <div>Polarity</div>
+                    {/* <button
+                      onClick={() => setShowFinalPolarity(!showFinalPolarity)}
+                    >
+                      Exact meaning
+                    </button> */}
+                  </div>
+                ) : null}
+                {showValueMeaning ? (
+                  <div className="data">
+                    <div>Value Meaning</div>
+                  </div>
+                ) : null}
+                {showDeckMeaning ? (
+                  <div className="data">
+                    <div>Deck Meaning</div>
+                  </div>
+                ) : null}
+              </>
             ) : null}
           </div>
         ))}
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {showPolarity ? (
-          <div className="data">
-            <div>Polarity</div>
-            <button></button>
-          </div>
-        ) : null}
-        {showValueMeaning ? (
-          <div className="data">
-            <div>Value Meaning</div>
-            <button></button>
-          </div>
-        ) : null}
-        {showDeckMeaning ? (
-          <div className="data">
-            <div>Deck Meaning</div>
-            <button></button>
-          </div>
-        ) : null}
+      <div>
+        {showFinalPolarity ? "Final polarity" : null}
       </div>
 
       <div
@@ -126,8 +124,14 @@ const Table = () => {
       >
         {selectedCards && selectedCards.length > 2 ? (
           <>
-            <button onClick={() => setShowPolarity(!showPolarity)}>
-              Color interpretation
+            <button
+              onClick={() =>
+                showPolarity
+                  ? setShowFinalPolarity(!showFinalPolarity)
+                  : setShowPolarity(!showPolarity)
+              }
+            >
+              {showPolarity ? "Final interpretation" : "Color interpretation"}
             </button>
             <button onClick={() => setShowValueMeaning(!showValueMeaning)}>
               Number interpretation
