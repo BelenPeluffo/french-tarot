@@ -61,13 +61,24 @@ const Table = () => {
           </div>
         ))}
       </div>
-      <div>
-        <button
-          style={{ marginTop: "10px" }}
-          onClick={() => setSelectedCards([])}
-        >
-          Show cards
-        </button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: "10px",
+          gap: "10px",
+          justifyContent: "center",
+        }}
+      >
+        {selectedCards && selectedCards.length > 2 ? (
+          <>
+            <button>Color interpretation</button>
+            <button>Deck interpretation</button>
+            <button>Number interpretation</button>
+          </>
+        ) : (
+          <button onClick={() => setSelectedCards([])}>Show cards</button>
+        )}
       </div>
     </div>
   );
