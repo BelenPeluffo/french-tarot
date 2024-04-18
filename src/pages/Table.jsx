@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-const CARDS_DECK = ["♠", "♥", "♦", "♣"];
+const CARDS_DECK = [
+  { icon: "♠", color: "black" },
+  { icon: "♥", color: "red" },
+  { icon: "♦", color: "red" },
+  { icon: "♣", color: "black" },
+];
 const CARDS_VALUES = [
   "A",
   "2",
@@ -26,7 +31,7 @@ const Table = () => {
       CARDS_DECK[Math.round(Math.random() * (CARDS_DECK.length - 1))];
     const value =
       CARDS_VALUES[Math.round(Math.random() * (CARDS_VALUES.length - 1))];
-    return `${value} ${deck}`;
+    return { card: `${value} ${deck.icon}`, color: deck.color };
   };
 
   const setCards = () => {
@@ -45,18 +50,16 @@ const Table = () => {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-        <div className="card-container">
-          <div>Past</div>
-          <div className="card">{selectedCards ? selectedCards[0] : null}</div>
-        </div>
-        <div className="card-container">
-          <div>Present</div>
-          <div className="card">{selectedCards ? selectedCards[1] : null}</div>
-        </div>
-        <div className="card-container">
-          <div>Future</div>
-          <div className="card">{selectedCards ? selectedCards[2] : null}</div>
-        </div>
+        {["Past", "Present", "Future"].map((title, index) => (
+          <div className="card-container" key={index}>
+            <div>{title}</div>
+            {selectedCards && selectedCards.length > 2 ? (
+              <div className={`card ${selectedCards[index].color}`}>
+                {selectedCards[index].card}
+              </div>
+            ) : null}
+          </div>
+        ))}
       </div>
       <div>
         <button
