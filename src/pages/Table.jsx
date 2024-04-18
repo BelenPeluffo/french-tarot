@@ -66,7 +66,15 @@ const Table = () => {
     }
   };
 
+  const cleanMeanings = () => {
+    setShowPolarity(false);
+    setShowValueMeaning(false);
+    setShowDeckMeaning(false);
+    setShowFinalPolarity(false);
+  };
+
   useEffect(() => {
+    cleanMeanings();
     if (selectedCards && selectedCards.length < 4) {
       setCards();
     }
@@ -85,22 +93,17 @@ const Table = () => {
                 </div>
                 {showPolarity ? (
                   <div className="data">
-                    <div>Polarity</div>
-                    {/* <button
-                      onClick={() => setShowFinalPolarity(!showFinalPolarity)}
-                    >
-                      Exact meaning
-                    </button> */}
+                    <div>{selectedCards[index].cardPolarity}</div>
                   </div>
                 ) : null}
                 {showValueMeaning ? (
                   <div className="data">
-                    <div>Value Meaning</div>
+                    <div>{selectedCards[index].valueMeaning}</div>
                   </div>
                 ) : null}
                 {showDeckMeaning ? (
                   <div className="data">
-                    <div>Deck Meaning</div>
+                    <div>{selectedCards[index].cardMeaning}</div>
                   </div>
                 ) : null}
               </>
@@ -109,21 +112,28 @@ const Table = () => {
         ))}
       </div>
 
-      <div>
-        {showFinalPolarity ? "Final polarity" : null}
-      </div>
+      <div>{showFinalPolarity ? "Final polarity" : null}</div>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           marginTop: "10px",
           gap: "10px",
           justifyContent: "center",
+          width: 'fit-content',
+          alignContent: "center",
         }}
       >
         {selectedCards && selectedCards.length > 2 ? (
-          <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "10px",
+              justifyContent: "center",
+            }}
+          >
             <button
               onClick={() =>
                 showPolarity
@@ -139,10 +149,11 @@ const Table = () => {
             <button onClick={() => setShowDeckMeaning(!showDeckMeaning)}>
               Deck interpretation
             </button>
-          </>
-        ) : (
-          <button onClick={() => setSelectedCards([])}>Show cards</button>
-        )}
+          </div>
+        ) : null}
+        <button onClick={() => setSelectedCards([])}>
+          {selectedCards && selectedCards.length > 2 ? "Reset" : "Show cards"}
+        </button>
       </div>
     </div>
   );
